@@ -1,0 +1,12 @@
+server:
+  port: ${SERVER_PORT:8888}
+  
+spring:  
+  application:
+    name: config-server
+  cloud:    
+    config:      
+      server:
+        git:
+          uri: ${CONFIG_URI:https://github.com/techbeer-code/techbeer2}
+          searchPaths: configs
