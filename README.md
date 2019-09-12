@@ -22,8 +22,11 @@ public class ConfigServerApplication {
 
 }
 ```
-- especificar onde o repostório GIT com as configurações está localizado no arquivo `application.yml` 
+- especificar a porta e onde o repostório GIT com as configurações está localizado no arquivo `application.yml` 
 ```java
+server:
+  port: ${SERVER_PORT:8888}
+
 spring:  
   application:
     name: config-server
@@ -52,6 +55,21 @@ public class DiscoveryServerApplication {
 }
 ```
 
+- especificar a porta e as configurações referente ao discovery `discovery-server.yml` 
+```java
+server:
+  port: ${SERVER_PORT:8761}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+```
+
 ## User-Greetings-Service
 Responsável por receber o nome do usuário e buscar a saudação no serviço greetings-service.
 
@@ -68,6 +86,34 @@ public class UserGreetingsServiceApplication {
 	}
 
 }
+```
+
+- especificar a porta e as configurações referente ao discovery e ao circuit break `user-greetings-service.yml` 
+```java
+server:
+  port: ${SERVER_PORT:8080}
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: true
+
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        requestVolumeThreshold: 5
+        sleepWindowInMilliseconds: 5000
+
+greetings-service:
+  ribbon:
+    eureka:
+      enabled: true
 ```
 
 ## Greetings-Service
@@ -89,5 +135,10 @@ public class GreetingsServiceApplication {
 
 ---
 
-## Execução
-Para testar a execução, após inicializar todos os serviços, acessar a URL: http://localhost:8080
+## Execução dos Serviços
+
+- Para executar os serviços é necessário acessar via terminal cada um dos serviços e rodar o seguinte comando Maven:
+  - `mvn spring-boot:run`
+  
+- Para testar a execução, após inicializar todos os serviços:
+  - http://localhost:8080
