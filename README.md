@@ -8,3 +8,7 @@ Microsserviços utilizados na demostração apresentada durante o Techbeer.
 - **User-Greetings-Service**: responsável por receber o nome do usuário e buscar a saudação no serviço greetings-service.
 - **Greetings-Service**: responsável por gerar a saudação de acordo com o horário.
 
+<div align="center">
+    <img src="/microservicos.png" /> 
+</div>
+
