@@ -22,7 +22,7 @@ public class ConfigServerApplication {
 
 }
 ```
-- especificar a porta e onde o repostório GIT com as configurações está localizado no arquivo `application.yml` 
+- especificar a porta e o local onde o repostório GIT com as configurações dos demais serviços - arquivo `application.yml` 
 ```java
 server:
   port: ${SERVER_PORT:8888}
@@ -55,7 +55,7 @@ public class DiscoveryServerApplication {
 }
 ```
 
-- especificar a porta e as configurações referente ao discovery `discovery-server.yml` 
+- especificar a porta e as configurações referente ao serviço Eureka (discovery server) - arquivo `discovery-server.yml` 
 ```java
 server:
   port: ${SERVER_PORT:8761}
@@ -88,7 +88,7 @@ public class UserGreetingsServiceApplication {
 }
 ```
 
-- especificar a porta e as configurações referente ao discovery e ao circuit break `user-greetings-service.yml` 
+- especificar a porta e as configurações referente ao Eureka (discovery client) e ao Hystrix (circuit break) - arquivo `user-greetings-service.yml` 
 ```java
 server:
   port: ${SERVER_PORT:8080}
@@ -132,7 +132,22 @@ public class GreetingsServiceApplication {
 
 }
 ```
+- especificar a porta e as configurações referente ao Eureka (discovery client) - arquivo `greetings-service.yml` 
+```java
+server:
+  port: ${SERVER_PORT:8090}
 
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: true
+
+```
 ---
 
 ## Execução dos Serviços
@@ -142,3 +157,13 @@ public class GreetingsServiceApplication {
   
 - Para testar a execução, após inicializar todos os serviços:
   - http://localhost:8080
+
+---
+
+## Referências
+- https://spring.io/projects/spring-cloud
+- https://spring.io/projects/spring-cloud-config
+- https://spring.io/projects/spring-cloud-netflix
+  - https://github.com/Netflix/hystrix
+  - https://github.com/Netflix/eureka
+  - https://github.com/Netflix/ribbon
