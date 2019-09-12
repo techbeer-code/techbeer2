@@ -6,10 +6,10 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 
-@SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableHystrixDashboard
+@SpringBootApplication
 public class UserGreetingsServiceApplication {
 
 	public static void main(String[] args) {
