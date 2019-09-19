@@ -1,4 +1,4 @@
-# Alelo Tech & Beer - Microsserviços
+# Tech & Beer - Microsserviços
 
 Microsserviços utilizados na demostração apresentada durante o Techbeer.
 
